@@ -35,7 +35,7 @@ public class OperacaoService {
                     .build();
 
             CSVReader reader = new CSVReaderBuilder(
-                    new InputStreamReader(arquivo.getInputStream())
+                    new InputStreamReader(arquivo.getInputStream(), "windows-1252")
             )
                     .withCSVParser(parser)
                     .build();

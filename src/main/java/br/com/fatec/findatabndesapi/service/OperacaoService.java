@@ -1,6 +1,7 @@
 package br.com.fatec.findatabndesapi.service;
 
 import br.com.fatec.findatabndesapi.model.Operacao;
+import br.com.fatec.findatabndesapi.model.ResumoCargaDTO;
 import br.com.fatec.findatabndesapi.repository.OperacaoRepository;
 
 import com.opencsv.CSVParser;
@@ -8,12 +9,16 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,7 @@ import java.util.List;
 public class OperacaoService {
 
     private final OperacaoRepository repository;
+
 
     public OperacaoService(OperacaoRepository repository) {
         this.repository = repository;
@@ -49,6 +55,17 @@ public class OperacaoService {
 
             final int TAMANHO_LOTE = 1000;
 
+            Long ultimoIdBase = repository.buscarUltimaCarga();
+
+            if (ultimoIdBase == null) {
+                ultimoIdBase = 0L;
+            }
+
+            Long novoIdBase = ultimoIdBase + 1;
+
+            LocalDateTime dataCarga = LocalDateTime.now();
+
+
             while ((linha = reader.readNext()) != null) {
 
                 // ignora linha vazia
@@ -62,6 +79,9 @@ public class OperacaoService {
                 }
 
                 Operacao operacao = new Operacao();
+
+                operacao.setNumeroCarga(novoIdBase);
+                operacao.setDataCarga(dataCarga);
 
                 operacao.setCliente(
                         linha[0].trim()
@@ -156,5 +176,35 @@ public class OperacaoService {
                     e
             );
         }
+    }
+
+    public List<ResumoCargaDTO> listarBases() {
+
+        return repository.listarBases();
+    }
+
+    @Transactional
+    public ResponseEntity<String> deletarCarga(
+            Long nCarga
+    ) {
+
+        boolean existeCarga =
+                repository.existsByNumeroCarga(nCarga);
+
+        if (!existeCarga) {
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Número da base inválida.");
+        }
+
+        repository.deleteByNumeroCarga(nCarga);
+
+        return ResponseEntity
+                .ok(
+                        "Registros da base "
+                                + nCarga +
+                                " deletados."
+                );
     }
 }

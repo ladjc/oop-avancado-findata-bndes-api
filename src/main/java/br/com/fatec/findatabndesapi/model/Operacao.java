@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "operacoes")
@@ -46,8 +47,32 @@ public class Operacao {
     @Column(name = "situacao_da_operacao")
     private String situacaoDaOperacao;
 
+    @Column(name = "n_carga")
+    private Long numeroCarga;
+
+    @Column(name = "data_carga")
+    private LocalDateTime dataCarga;
+
     public Operacao() {
     }
+
+
+    public Long getNumeroCarga() {
+        return numeroCarga;
+    }
+
+    public void setNumeroCarga(Long nCarga) {
+        this.numeroCarga = nCarga;
+    }
+
+    public LocalDateTime getDataCarga() {
+        return dataCarga;
+    }
+
+    public void setDataCarga(LocalDateTime dataCarga) {
+        this.dataCarga = dataCarga;
+    }
+
 
     public Long getId() {
         return id;

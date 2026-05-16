@@ -21,73 +21,170 @@ public class EstatisticaService {
         this.repository = repository;
     }
 
-    public List<MediaValorUfDTO> mediaValorUf() {
+    public List<MediaValorUfDTO> mediaValorUf(
+            Long base
+    ) {
 
-        return repository.mediaValorPorUf();
+        if (base == null) {
+
+            return repository.mediaValorPorUf();
+        }
+
+        return repository.mediaValorPorUf(base);
     }
 
-    public List<MediaValorPorteDTO> mediaValorPorte() {
+    public List<MediaValorPorteDTO> mediaValorPorte(
+            Long base
+    ) {
 
-        return repository.mediaValorPorPorte();
+        if (base == null) {
+
+            return repository.mediaValorPorPorte();
+        }
+
+        return repository.mediaValorPorPorte(base);
     }
 
-    public List<SomaValorUfDTO> somaValorUf() {
+    public List<SomaValorUfDTO> somaValorUf(
+            Long base
+    ) {
 
-        return repository.somaValorPorUf();
+        if (base == null) {
+
+            return repository.somaValorPorUf();
+        }
+
+        return repository.somaValorPorUf(base);
     }
 
-    public List<SomaValorPorteDTO> somaValorPorte() {
+    public List<SomaValorPorteDTO> somaValorPorte(
+            Long base
+    ) {
 
-        return repository.somaValorPorPorte();
+        if (base == null) {
+
+            return repository.somaValorPorPorte();
+        }
+
+        return repository.somaValorPorPorte(base);
     }
 
-    public Long quantidadeTotalOperacoes() {
+    public Long quantidadeTotalOperacoes(
+            Long base
+    ) {
 
-        return repository.quantidadeTotalOperacoes();
+        if (base == null) {
+
+            return repository.quantidadeTotalOperacoes();
+        }
+
+        return repository.quantidadeTotalOperacoes(base);
     }
 
-    public List<QuantidadeOperacoesUfDTO> quantidadeOperacoesPorUf() {
+    public List<QuantidadeOperacoesUfDTO>
+    quantidadeOperacoesPorUf(
+            Long base
+    ) {
 
-        return repository.quantidadeOperacoesPorUf();
+        if (base == null) {
+
+            return repository.quantidadeOperacoesPorUf();
+        }
+
+        return repository.quantidadeOperacoesPorUf(base);
     }
 
     public List<QuantidadeOperacoesSituacaoDTO>
-    quantidadeOperacoesPorSituacao() {
+    quantidadeOperacoesPorSituacao(
+            Long base
+    ) {
 
-        return repository.quantidadeOperacoesPorSituacao();
+        if (base == null) {
+
+            return repository.quantidadeOperacoesPorSituacao();
+        }
+
+        return repository.quantidadeOperacoesPorSituacao(base);
     }
-    public Double mediaJurosGeral() {
+
+    public Double mediaJurosGeral(
+            Long base
+    ) {
+
+        Double valor;
+
+        if (base == null) {
+
+            valor = repository.mediaJurosGeral();
+
+        } else {
+
+            valor = repository.mediaJurosGeral(base);
+        }
 
         return BigDecimal
-                .valueOf(repository.mediaJurosGeral())
+                .valueOf(valor)
                 .setScale(2, RoundingMode.HALF_UP)
                 .doubleValue();
     }
 
-    public List<MediaJurosUfDTO> mediaJurosPorUf() {
+    public List<MediaJurosUfDTO> mediaJurosPorUf(
+            Long base
+    ) {
 
-        return repository.mediaJurosPorUf();
+        if (base == null) {
+
+            return repository.mediaJurosPorUf();
+        }
+
+        return repository.mediaJurosPorUf(base);
     }
 
-    public List<MediaJurosSetorDTO> mediaJurosPorSetor() {
+    public List<MediaJurosSetorDTO> mediaJurosPorSetor(
+            Long base
+    ) {
 
-        return repository.mediaJurosPorSetor();
+        if (base == null) {
+
+            return repository.mediaJurosPorSetor();
+        }
+
+        return repository.mediaJurosPorSetor(base);
     }
 
-    public List<MediaValorSetorDTO> mediaValorPorSetor() {
+    public List<MediaValorSetorDTO> mediaValorPorSetor(
+            Long base
+    ) {
 
-        return repository.mediaValorPorSetor();
+        if (base == null) {
+
+            return repository.mediaValorPorSetor();
+        }
+
+        return repository.mediaValorPorSetor(base);
     }
 
-    public List<TopClienteDTO> topClientes() {
+    public List<TopClienteDTO> topClientes(
+            Long base
+    ) {
 
-        return repository.topClientes();
+        if (base == null) {
+
+            return repository.topClientes();
+        }
+
+        return repository.topClientes(base);
     }
 
-    public List<ParticipacaoUfDTO> participacaoPorUf() {
+    public List<ParticipacaoUfDTO> participacaoPorUf(
+            Long base
+    ) {
 
-        return repository.participacaoPorUf();
+        if (base == null) {
+
+            return repository.participacaoPorUf();
+        }
+
+        return repository.participacaoPorUf(base);
     }
-
-
 }

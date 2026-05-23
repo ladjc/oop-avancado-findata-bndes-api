@@ -67,7 +67,12 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Main content ── */
 .main { flex: 1; overflow-x: hidden; }
-.page { padding: 36px 40px; max-width: 1200px; }
+.page {
+  width: min(100%, 1600px);
+  max-width: 1600px;
+  padding: 36px 40px;
+  margin: 0 auto;
+}
 
 /* ── Page header ── */
 .page-header { margin-bottom: 32px; }
@@ -157,7 +162,7 @@ a { color: inherit; text-decoration: none; }
 .base-card-actions { display: flex; gap: 8px; }
 
 /* ── Análise layout ── */
-.analysis-layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+.analysis-layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 420px); gap: 24px; align-items: start; }
 .analysis-main { display: flex; flex-direction: column; gap: 24px; }
 .analysis-sidebar { display: flex; flex-direction: column; gap: 16px; }
 

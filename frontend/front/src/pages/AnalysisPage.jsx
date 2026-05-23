@@ -73,7 +73,7 @@ export default function AnalysisPage() {
     }).finally(() => setLoading(false))
 
     // Buscar operações para a tabela
-    fetch(`/operacoes?base=${baseId}`)
+    fetch(`/operacoes/bases?base=${baseId}`)
       .then(r => r.json())
       .then(d => setOperacoes(d || []))
       .catch(() => setOperacoes([]))

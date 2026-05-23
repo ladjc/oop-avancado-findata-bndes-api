@@ -1,42 +1,49 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer
-} from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 
-const currencyFormatter = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL'
-})
+const fmt = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1 }).format(v)
+const fmtFull = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v)
 
-function MediaSetorChart({ data = [] }) {
-  const formatCurrency = (value) => currencyFormatter.format(Number(value) || 0)
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null
+  return (
+    <div style={{ background: '#fff', border: '1px solid #e4e2db', borderRadius: 8, padding: '10px 14px', boxShadow: '0 4px 16px rgba(0,0,0,.1)', maxWidth: 240 }}>
+      <p style={{ fontWeight: 600, fontSize: 13, marginBottom: 4 }}>{label}</p>
+      <p style={{ fontSize: 13, color: '#1a4a2e' }}>{fmtFull(payload[0].value)}</p>
+    </div>
+  )
+}
 
-  const sortedData = (Array.isArray(data) ? data.slice() : [])
-    .map(item => ({ ...item, mediaValor: Number(item.mediaValor) || 0 }))
-    .sort((a, b) => b.mediaValor - a.mediaValor)
+export default function GraficoMediaSetor({ data = [] }) {
+  const sorted = [...data].sort((a, b) => b.mediaValor - a.mediaValor)
+  const height = Math.max(280, sorted.length * 36)
 
   return (
-    <div className="chart-container card">
-      <h2>Gráfico de Média de Valor por Setor</h2>
-
-      <ResponsiveContainer width="100%" height={350}>
-        <BarChart data={sortedData} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
-          <XAxis dataKey="setorCnae" label={{ position: 'top', dy: -10 }} />
+    <div className="chart-card card">
+      <div className="chart-title">Média de valor por setor CNAE</div>
+      <ResponsiveContainer width="100%" height={height}>
+        <BarChart
+          data={sorted}
+          layout="vertical"
+          margin={{ top: 0, right: 20, left: 8, bottom: 0 }}
+        >
+          <XAxis type="number" tickFormatter={fmt} tick={{ fontSize: 11, fill: '#9b9890' }} axisLine={false} tickLine={false} />
           <YAxis
-            label={{ angle: -90, position: 'insideLeft', dy: -10 }}
-            tickFormatter={formatCurrency}
+            dataKey="setorCnae"
+            type="category"
+            tick={{ fontSize: 12, fill: '#6b6860' }}
+            axisLine={false}
+            tickLine={false}
+            width={200}
+            tickFormatter={v => v?.length > 28 ? v.slice(0, 28) + '…' : v}
           />
-          <Tooltip formatter={(value) => formatCurrency(value)} />
-
-          <Bar dataKey="mediaValor" />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(26,74,46,.06)' }} />
+          <Bar dataKey="mediaValor" radius={[0, 4, 4, 0]}>
+            {sorted.map((_, i) => (
+              <Cell key={i} fill={i === 0 ? '#1a4a2e' : i < 5 ? '#2d7a4f' : '#a8c8b5'} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>
   )
 }
-
-export default MediaSetorChart

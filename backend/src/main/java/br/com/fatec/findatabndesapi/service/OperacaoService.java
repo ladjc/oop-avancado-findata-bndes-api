@@ -1,13 +1,11 @@
 package br.com.fatec.findatabndesapi.service;
 
-import br.com.fatec.findatabndesapi.model.Operacao;
-import br.com.fatec.findatabndesapi.model.ResumoCargaDTO;
-import br.com.fatec.findatabndesapi.repository.OperacaoRepository;
-
-import com.opencsv.CSVParser;
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+
+import br.com.fatec.findatabndesapi.model.Operacao;
+import br.com.fatec.findatabndesapi.model.ResumoCargaDTO;
+import br.com.fatec.findatabndesapi.repository.OperacaoRepository;
 
 @Service
 public class OperacaoService {
@@ -207,4 +207,9 @@ public class OperacaoService {
                                 " deletados."
                 );
     }
+
+        public List<Operacao> listarOperacoes(Long base) {
+        if (base == null) return repository.findAll();
+        return repository.findByNumeroCarga(base);
+                }
 }

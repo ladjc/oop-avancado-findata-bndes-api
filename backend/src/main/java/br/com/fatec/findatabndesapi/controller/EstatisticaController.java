@@ -1,14 +1,24 @@
 package br.com.fatec.findatabndesapi.controller;
 
-import br.com.fatec.findatabndesapi.model.*;
-import br.com.fatec.findatabndesapi.service.EstatisticaService;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import br.com.fatec.findatabndesapi.model.MediaJurosSetorDTO;
+import br.com.fatec.findatabndesapi.model.MediaJurosUfDTO;
+import br.com.fatec.findatabndesapi.model.MediaValorPorteDTO;
+import br.com.fatec.findatabndesapi.model.MediaValorSetorDTO;
+import br.com.fatec.findatabndesapi.model.MediaValorUfDTO;
+import br.com.fatec.findatabndesapi.model.ParticipacaoUfDTO;
+import br.com.fatec.findatabndesapi.model.QuantidadeOperacoesSituacaoDTO;
+import br.com.fatec.findatabndesapi.model.QuantidadeOperacoesUfDTO;
+import br.com.fatec.findatabndesapi.model.SomaValorPorteDTO;
+import br.com.fatec.findatabndesapi.model.SomaValorUfDTO;
+import br.com.fatec.findatabndesapi.model.TopClienteDTO;
+import br.com.fatec.findatabndesapi.service.EstatisticaService;
 
 @RestController
 @RequestMapping("/estatisticas")

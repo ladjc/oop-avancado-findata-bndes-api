@@ -1,6 +1,6 @@
 package br.com.fatec.findatabndesapi.repository;
 
-import br.com.fatec.findatabndesapi.model.*;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +8,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import br.com.fatec.findatabndesapi.model.MediaJurosSetorDTO;
+import br.com.fatec.findatabndesapi.model.MediaJurosUfDTO;
+import br.com.fatec.findatabndesapi.model.MediaValorPorteDTO;
+import br.com.fatec.findatabndesapi.model.MediaValorSetorDTO;
+import br.com.fatec.findatabndesapi.model.MediaValorUfDTO;
+import br.com.fatec.findatabndesapi.model.Operacao;
+import br.com.fatec.findatabndesapi.model.ParticipacaoUfDTO;
+import br.com.fatec.findatabndesapi.model.QuantidadeOperacoesSituacaoDTO;
+import br.com.fatec.findatabndesapi.model.QuantidadeOperacoesUfDTO;
+import br.com.fatec.findatabndesapi.model.ResumoCargaDTO;
+import br.com.fatec.findatabndesapi.model.SomaValorPorteDTO;
+import br.com.fatec.findatabndesapi.model.SomaValorUfDTO;
+import br.com.fatec.findatabndesapi.model.TopClienteDTO;
 
 @Repository
 public interface OperacaoRepository
@@ -414,4 +426,5 @@ public interface OperacaoRepository
     void deleteByNumeroCarga(
             Long numeroCarga
     );
+    List<Operacao> findByNumeroCarga(Long numeroCarga);
 }

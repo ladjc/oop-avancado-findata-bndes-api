@@ -35,35 +35,35 @@ public class EstatisticaController {
 
     @GetMapping("/media-valor-uf")
     public ResponseEntity<List<MediaValorUfDTO>> mediaValorUf(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(service.mediaValorUf(base));
     }
 
     @GetMapping("/media-valor-porte")
     public ResponseEntity<List<MediaValorPorteDTO>> mediaValorPorte(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(service.mediaValorPorte(base));
     }
 
     @GetMapping("/soma-valor-uf")
     public ResponseEntity<List<SomaValorUfDTO>> somaValorUf(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(service.somaValorUf(base));
     }
 
     @GetMapping("/soma-valor-porte")
     public ResponseEntity<List<SomaValorPorteDTO>> somaValorPorte(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(service.somaValorPorte(base));
     }
 
     @GetMapping("/quantidade-total-operacoes")
     public ResponseEntity<Long> quantidadeTotalOperacoes(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.quantidadeTotalOperacoes(base)
@@ -73,7 +73,7 @@ public class EstatisticaController {
     @GetMapping("/quantidade-operacoes-uf")
     public ResponseEntity<List<QuantidadeOperacoesUfDTO>>
     quantidadeOperacoesPorUf(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.quantidadeOperacoesPorUf(base)
@@ -83,7 +83,7 @@ public class EstatisticaController {
     @GetMapping("/quantidade-operacoes-situacao")
     public ResponseEntity<List<QuantidadeOperacoesSituacaoDTO>>
     quantidadeOperacoesPorSituacao(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.quantidadeOperacoesPorSituacao(base)
@@ -92,7 +92,7 @@ public class EstatisticaController {
 
     @GetMapping("/media-juros-geral")
     public ResponseEntity<Double> mediaJurosGeral(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.mediaJurosGeral(base)
@@ -102,7 +102,7 @@ public class EstatisticaController {
     @GetMapping("/media-juros-uf")
     public ResponseEntity<List<MediaJurosUfDTO>>
     mediaJurosPorUf(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.mediaJurosPorUf(base)
@@ -112,7 +112,7 @@ public class EstatisticaController {
     @GetMapping("/media-juros-setor")
     public ResponseEntity<List<MediaJurosSetorDTO>>
     mediaJurosPorSetor(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.mediaJurosPorSetor(base)
@@ -122,7 +122,7 @@ public class EstatisticaController {
     @GetMapping("/media-valor-setor")
     public ResponseEntity<List<MediaValorSetorDTO>>
     mediaValorPorSetor(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.mediaValorPorSetor(base)
@@ -131,7 +131,7 @@ public class EstatisticaController {
 
     @GetMapping("/top-clientes")
     public ResponseEntity<List<TopClienteDTO>> topClientes(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.topClientes(base)
@@ -141,7 +141,7 @@ public class EstatisticaController {
     @GetMapping("/participacao-uf")
     public ResponseEntity<List<ParticipacaoUfDTO>>
     participacaoPorUf(
-            @RequestParam(required = false) Long base
+            @RequestParam("base") Long base
     ) {
         return ResponseEntity.ok(
                 service.participacaoPorUf(base)

@@ -48,7 +48,6 @@ public class OperacaoService {
 
             String[] linha;
 
-            // pula cabeçalho
             reader.readNext();
 
             List<Operacao> lote = new ArrayList<>();
@@ -184,32 +183,22 @@ public class OperacaoService {
     }
 
     @Transactional
-    public ResponseEntity<String> deletarCarga(
-            Long nCarga
-    ) {
+    public boolean deletarCarga(Long nCarga) {
 
         boolean existeCarga =
                 repository.existsByNumeroCarga(nCarga);
 
         if (!existeCarga) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Número da base inválida.");
+            return false;
         }
 
         repository.deleteByNumeroCarga(nCarga);
 
-        return ResponseEntity
-                .ok(
-                        "Registros da base "
-                                + nCarga +
-                                " deletados."
-                );
+        return true;
     }
 
-        public List<Operacao> listarOperacoes(Long base) {
+    public List<Operacao> listarOperacoes(Long base) {
         if (base == null) return repository.findAll();
         return repository.findByNumeroCarga(base);
-                }
+    }
 }

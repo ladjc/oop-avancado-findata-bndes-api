@@ -29,15 +29,29 @@ public class OperacaoController {
 
     @PostMapping("/carga")
     public ResponseEntity<String> cargaCsv(@RequestParam("arquivo") MultipartFile arquivo) {
-        operacaoService.carregarCsv(arquivo);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(arquivo.getOriginalFilename() + " carregado com sucesso.");
+        try{
+            operacaoService.carregarCsv(arquivo);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(arquivo.getOriginalFilename() + " carregado com sucesso.");
+        }catch(Exception ex){
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao carregar CSV:\n" + ex.getMessage());
+        }
+
+
     }
 
     @GetMapping("/bases")
-    public List<ResumoCargaDTO> listarBases() {
+    public ResponseEntity<List<ResumoCargaDTO>> listarBases() {
 
-        return operacaoService.listarBases();
+        List<ResumoCargaDTO> cargas = operacaoService.listarBases();
+
+        if (cargas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(cargas);
     }
 
     @DeleteMapping("/carga/{nCarga}")
@@ -45,12 +59,31 @@ public class OperacaoController {
             @PathVariable Long nCarga
     ) {
 
-        return operacaoService.deletarCarga(nCarga);
+        boolean deletado = operacaoService.deletarCarga(nCarga);
+
+        if (!deletado) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Número da base inválida.");
+        }
+
+        return ResponseEntity.ok(
+                "Registros da base " + nCarga + " deletados."
+        );
     }
+
     @GetMapping
-    public List<Operacao> listarOperacoes(
+    public ResponseEntity<List<Operacao>> listarOperacoes(
             @RequestParam(required = false) Long base
     ) {
-        return operacaoService.listarOperacoes(base);
+
+        List<Operacao> operacoes =
+                operacaoService.listarOperacoes(base);
+
+        if (operacoes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(operacoes);
     }
-    }
+}

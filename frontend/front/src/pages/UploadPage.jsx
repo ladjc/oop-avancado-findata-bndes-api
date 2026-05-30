@@ -34,7 +34,7 @@ function UploadZone({ onFile, selectedFile }) {
         ? <p className="file-selected">📄 {selectedFile.name}</p>
         : <>
             <h3>Arraste o CSV aqui</h3>
-            <p>ou clique para selecionar · apenas .csv</p>
+            <p>ou clique para selecionar · apenas .csv de no máximo 20MB</p>
           </>
       }
       <input

@@ -1,9 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState, useMemo } from 'react'
-import GraficoMediaUF from '../components/grafico/GraficoMediaUF'
-import GraficoMediaSetor from '../components/grafico/GraficoMediaSetor'
-import GraficoMediaPorte from '../components/grafico/GraficoMediaPorte'
-import GraficoTopCli from '../components/grafico/GraficoTopCli'
+import GraficoMediaUF from '../components/Graficos/GraficoMediaUF'
+import GraficoMediaSetor from '../components/Graficos/GraficoMediaSetor'
+import GraficoMediaPorte from '../components/Graficos/GraficoMediaPorte'
+import GraficoTopCli from '../components/Graficos/GraficoTopCli'
+import GraficoParticipacaoUF from '../components/Graficos/GraficoParticipacaoUF'
 
 const fmt = v => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
 const fmtN = v => Number(v || 0).toLocaleString('pt-BR')
@@ -35,7 +36,7 @@ export default function AnalysisPage() {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState({
     qtdTotal: 0, ativas: 0, liquidadas: 0,
-    mediaUf: [], mediaSetor: [], mediaPorte: [], topClientes: [], qtdUf: []
+    mediaUf: [], mediaSetor: [], mediaPorte: [], topClientes: [], qtdUf: [], participacaoUf: []
   })
 
   // Tabela
@@ -58,7 +59,8 @@ export default function AnalysisPage() {
       fetch(`/estatisticas/media-valor-porte${base}`).then(r => r.json()),
       fetch(`/estatisticas/top-clientes${base}`).then(r => r.json()),
       fetch(`/estatisticas/quantidade-operacoes-uf${base}`).then(r => r.json()),
-    ]).then(([bases, situacoes, mediaUf, mediaSetor, mediaPorte, topClientes, qtdUf]) => {
+      fetch(`/estatisticas/participacao-uf${base}`).then(r => r.json()),
+    ]).then(([bases, situacoes, mediaUf, mediaSetor, mediaPorte, topClientes, qtdUf, participacaoUf]) => {
       const base = bases.find(b => b.nCarga === baseId)
       const ativas = situacoes.find(s => s.situacaoDaOperacao?.toUpperCase() === 'ATIVA')?.quantidade || 0
       const liquidadas = situacoes.find(s => s.situacaoDaOperacao?.toUpperCase() === 'LIQUIDADA')?.quantidade || 0
@@ -69,6 +71,7 @@ export default function AnalysisPage() {
         mediaPorte: (mediaPorte || []).map(i => ({ porteDoCliente: i.porteDoCliente, mediaValor: +i.mediaValor?.toFixed(2) })),
         topClientes: (topClientes || []).map(i => ({ nome: i.cliente, valor: i.totalDesembolsado })),
         qtdUf: qtdUf || [],
+        participacaoUf: participacaoUf || [],
       })
     }).finally(() => setLoading(false))
 
@@ -209,9 +212,28 @@ export default function AnalysisPage() {
               <Skeleton />
               <Skeleton />
               <Skeleton />
+              <Skeleton />
             </>
           ) : (
             <>
+              {/* Gráfico de Participação com Sidebar */}
+              <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
+                <div style={{ flex: 1 }}>
+                  <GraficoParticipacaoUF data={data.participacaoUf} />
+                </div>
+                <div className="card states-card" style={{ width: 280, maxHeight: 600, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                  <div className="states-card-header">Participação por UF (%)</div>
+                  <div className="states-scroll" style={{ flex: 1, overflowY: 'auto' }}>
+                    {[...data.participacaoUf].sort((a, b) => b.percentual - a.percentual).map(item => (
+                      <div key={item.uf} className="state-row">
+                        <span className="state-uf">{item.uf}</span>
+                        <span className="state-qty">{(item.percentual).toFixed(2)}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               <GraficoMediaUF data={data.mediaUf} />
               <GraficoMediaSetor data={data.mediaSetor} />
               <GraficoMediaPorte data={data.mediaPorte} />

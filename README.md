@@ -18,12 +18,35 @@ As bases podem ser encontradas no [site de dados abertos do BNDES](https://dados
 
 Entre as funcionalidades implementadas estão estatísticas de média, soma, participação percentual, quantidade de operações e ranking de clientes, além do controle de múltiplas cargas por versionamento dos dados carregados.
 ___
+
+## Executando o Projeto
+
+### Clonar o repositório
+
+1. Acessar o terminal e executar o seguinte comando: `git clone https://github.com/ladjc/oop-avancado-findata-bndes-api.git`
+
+### Executar o backend
+
+1. Abrir o terminal na pasta `./backend`
+2. Instalar as dependência do projeto usando: `mvn install`
+3. Abrir o projeto com o VSCode e executar o run em: `/src/main/java/br/com/fatec/findatabndesapi/FindataBndesApiApplication.java`
+
+### Executando o front
+
+1. Abrir o terminal na pasta: `./frontend`
+2. Instalar os pacotes com: `npm install`
+3. Executar o projeto com: `npm run dev`
+4. Acessar: `http://localhost:5173/`
+
+___
+
 ## Arquitetura do Projeto
+
 - [Back-end](./backend/)
 - [Front-end](./frontend/)
 
 ![arquitetura](./doc/Arquitetura_do_Projeto.jpg)
-___ 
+___
 
 ## Entidades
 

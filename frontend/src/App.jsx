@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-ro
 import { FaGithub } from 'react-icons/fa'
 import UploadPage from './pages/UploadPage'
 import AnalysisPage from './pages/AnalysisPage'
+import VLibras from './components/VLibras'
 
 const NAV = [
   { path: '/', label: 'Bases de Dados', icon: '📁' },
@@ -62,6 +63,7 @@ function Sidebar() {
     </aside>
   )
 }
+
 function Layout({ children }) {
   return (
     <div className="app-layout">
@@ -80,6 +82,9 @@ export default function App() {
           <Route path="/analysis/:id" element={<AnalysisPage />} />
         </Routes>
       </Layout>
+
+      {/* Widget de acessibilidade VLibras, global em todas as rotas */}
+      <VLibras />
     </BrowserRouter>
   )
 }
